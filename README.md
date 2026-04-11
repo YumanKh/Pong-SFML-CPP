@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # YuKman's Pong 🎮
 
 A classic Pong game built from scratch using C++ and SFML 3, featuring a menu system, basic game settings, credits, and two-player local gameplay.
@@ -136,3 +137,6 @@ First-year Computer Science student at Austin Community College
 
 © 2026 Yuman — This project is released with no copyright.  
 You are free to use, modify, and share it without restriction.
+=======
+# Pong-SFML-CPP
+>>>>>>> 6def752e0dbee19eb130b7e92ba310c3a7f6fe58
