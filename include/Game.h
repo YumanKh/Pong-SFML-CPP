@@ -5,6 +5,7 @@ using namespace std;
 using namespace sf;
 
 #include "Button.h"
+#include "Player.h"
 
 enum GameState {
 	Menu,
@@ -46,4 +47,8 @@ private:
 
 	Texture line_texture;
 	unique_ptr<Sprite> line_sprite;
+
+	//players
+	unique_ptr<Player> player_1;
+	unique_ptr<Player> player_2;
 };

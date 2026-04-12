@@ -46,6 +46,9 @@ Game::Game()
 	credits_button = make_unique<Button>(font, "CREDITS", Vector2f{ 30, 316 }, Vector2f{ 10, 316 }, Vector2f{ 280.0f, 45.0f });
 	quit_button = make_unique<Button>(font, "QUIT", Vector2f{ 30, 400 }, Vector2f{ 10, 400 }, Vector2f{ 280.0f, 45.0f });
 
+	//players
+	player_1 = make_unique<Player>(Vector2f(840.f, 250.f), Keyboard::Scan::Up, Keyboard::Scan::Down);
+	player_2 = make_unique<Player>(Vector2f(150.f, 250.f), Keyboard::Scan::W, Keyboard::Scan::S);
 }
 
 void Game::run() {
@@ -82,6 +85,10 @@ void Game::update(float dt) {
 		quit_button->update(window);
 	}
 	
+	if (gameState == Playing) {
+		player_1->update(dt);
+		player_2->update(dt);
+	}
 
 }
 
@@ -100,6 +107,9 @@ void Game::draw() {
 		window.clear(Color::Black);
 		window.draw(*line_sprite);
 		window.draw(*terrain_sprite);
+		player_1->draw(window);
+		player_2->draw(window);
+		
 		
 	}
 
