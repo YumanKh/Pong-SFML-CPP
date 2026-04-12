@@ -37,4 +37,7 @@ private:
 	//menu textures
 	Texture menu_texture;
 	unique_ptr<Sprite> menu_sprite;
+
+	Texture menu_wallpaper;
+	unique_ptr<Sprite> menuWallpaper_sprite;
 };
