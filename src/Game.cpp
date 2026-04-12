@@ -9,17 +9,33 @@ Game::Game()
 	window.setFramerateLimit(90);
 
 	//loading textures
+	//buttons table
 	if (!menu_texture.loadFromFile("assets/MenuSprite.png")) cout << "Error loading menu sprite." << endl;
 	menu_sprite = make_unique<Sprite>(menu_texture);
 	menu_sprite->setPosition({ 0, 100 });
 	menu_sprite->setColor(Color(180, 180, 180, 180));
 
+	//menu wallpaper
 	if (!menu_wallpaper.loadFromFile("assets/MenuWallpaper.jpg")) cout << "Error loading wallpaper." << endl;
 	menuWallpaper_sprite = make_unique<Sprite>(menu_wallpaper);
 	float scale_x = 1000.0f / menu_wallpaper.getSize().x;
 	float scale_y = 600.0f / menu_wallpaper.getSize().y;
 	menuWallpaper_sprite->setScale({ scale_x, scale_y });
 	menuWallpaper_sprite->setPosition({ 0, 0});
+
+	//terrain textures
+	if (!terrain_texture.loadFromFile("assets/TerrainSprite.png")) cout << "Error loading terrain." << endl;
+	terrain_sprite = make_unique<Sprite>(terrain_texture);
+	terrain_sprite->setScale({ 25.f, 18.75f });
+	float posX = (1000.f - terrain_sprite->getGlobalBounds().size.x) / 2.f;
+	terrain_sprite->setPosition({ posX, 0.f });
+
+	if (!line_texture.loadFromFile("assets/TerrainLine.png")) cout << "Error loading terrain." << endl;
+	line_sprite = make_unique<Sprite>(line_texture);
+	line_sprite->setScale({ 18.75f , 18.75f });
+	line_sprite->setScale({ 18.75f, 18.75f });
+	float linePosX = (1000.f - line_sprite->getGlobalBounds().size.x) / 2.f + (line_sprite->getGlobalBounds().size.x / 2.f) - (18.75f / 2.f);
+	line_sprite->setPosition({ linePosX, 0.f });
 
 	//font loading
 	if (!font.openFromFile("assets/BlackGameFont.ttf")) cout << "Error loading font." << endl;
@@ -48,7 +64,7 @@ void Game::handleEvents() {
 		if (event->is<Event::Closed>()) isRunning = false;
 		if (gameState == Menu) {
 			if (event->is<Event::MouseButtonPressed>()) {
-				if (play_button->isClicked(Vector2f(Mouse::getPosition(window)))) cout << "Play Test" << endl;
+				if (play_button->isClicked(Vector2f(Mouse::getPosition(window)))) gameState = Playing;
 				else if (options_button->isClicked(Vector2f(Mouse::getPosition(window)))) cout << "Options Test" << endl;
 				else if (credits_button->isClicked(Vector2f(Mouse::getPosition(window)))) cout << "Credits Test" << endl;
 				else if (quit_button->isClicked(Vector2f(Mouse::getPosition(window)))) isRunning = false;
@@ -78,6 +94,13 @@ void Game::draw() {
 		options_button->draw(window);
 		credits_button->draw(window);
 		quit_button->draw(window);
+	}
+
+	if (gameState == Playing) {
+		window.clear(Color::Black);
+		window.draw(*line_sprite);
+		window.draw(*terrain_sprite);
+		
 	}
 
 	window.display();

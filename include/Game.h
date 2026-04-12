@@ -40,4 +40,10 @@ private:
 
 	Texture menu_wallpaper;
 	unique_ptr<Sprite> menuWallpaper_sprite;
+
+	Texture terrain_texture;
+	unique_ptr<Sprite> terrain_sprite;
+
+	Texture line_texture;
+	unique_ptr<Sprite> line_sprite;
 };
