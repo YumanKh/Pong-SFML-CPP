@@ -10,6 +10,7 @@ public:
 	void scoreUpdater(Text& score, Vector2f position, Vector2f size);
 	void update(float dt);
 	void draw(RenderWindow& window);
+	FloatRect getBounds() const { return body->getGlobalBounds(); }
 
 private:
 	unique_ptr<RectangleShape> body;

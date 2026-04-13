@@ -49,6 +49,9 @@ Game::Game()
 	//players
 	player_1 = make_unique<Player>(Vector2f(840.f, 250.f), Keyboard::Scan::Up, Keyboard::Scan::Down);
 	player_2 = make_unique<Player>(Vector2f(150.f, 250.f), Keyboard::Scan::W, Keyboard::Scan::S);
+
+	//ball
+	ball = make_unique<Ball>(Vector2f({ 495.f, 295.f }));
 }
 
 void Game::run() {
@@ -88,6 +91,7 @@ void Game::update(float dt) {
 	if (gameState == Playing) {
 		player_1->update(dt);
 		player_2->update(dt);
+		ball->update(dt, *player_1, *player_2);
 	}
 
 }
@@ -109,6 +113,7 @@ void Game::draw() {
 		window.draw(*terrain_sprite);
 		player_1->draw(window);
 		player_2->draw(window);
+		ball->draw(window);
 		
 		
 	}

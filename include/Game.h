@@ -6,6 +6,7 @@ using namespace sf;
 
 #include "Button.h"
 #include "Player.h"
+#include "Ball.h"
 
 enum GameState {
 	Menu,
@@ -51,4 +52,6 @@ private:
 	//players
 	unique_ptr<Player> player_1;
 	unique_ptr<Player> player_2;
+
+	unique_ptr<Ball> ball;
 };

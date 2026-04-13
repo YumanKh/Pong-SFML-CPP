@@ -7,7 +7,7 @@ Player::Player(Vector2f position, Keyboard::Scan Up, Keyboard::Scan Down) {
 
 	body = make_unique <RectangleShape>();
 	body->setSize({ 10.f, 50.f });
-	body->setFillColor(Color::Red);
+	body->setFillColor(Color::White);
 	body->setPosition(playerPos);
 }
 
