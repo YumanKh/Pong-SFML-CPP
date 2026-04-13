@@ -7,23 +7,29 @@ Player::Player(Vector2f position, Keyboard::Scan Up, Keyboard::Scan Down) {
 
 	body = make_unique <RectangleShape>();
 	body->setSize({ 10.f, 50.f });
-	body->setFillColor(Color::White);
+	body->setFillColor(Color::Red);
 	body->setPosition(playerPos);
 }
 
-void Player::scoreUpdater(Vector2f position, Text& score, Vector2f size) {
+void Player::scoreUpdater(Text& score, Vector2f position, Vector2f size) {
 }
 
 void Player::update(float dt) {
 	Vector2f velocity = { 0.f, 0.f };
 	if (Keyboard::isKeyPressed(upKey)) velocity.y -= 300;
 	if (Keyboard::isKeyPressed(downKey)) velocity.y += 300;
+
 	body->move(velocity * dt);
+
+	if (body->getPosition().y <= 18.75f)
+		body->setPosition({ body->getPosition().x, 18.75f });
+	if (body->getPosition().y >= 531.25)
+		body->setPosition({ body->getPosition().x, 531.25 });
+		
+
+	
 }
 
 void Player::draw(RenderWindow& window) {
-	if (!body) {
-		cout << "Body is null" << endl;
-	}
 	window.draw(*body);
 }

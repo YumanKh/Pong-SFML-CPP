@@ -7,7 +7,7 @@ using namespace sf;
 class Player {
 public:
 	Player(Vector2f position, Keyboard::Scan Up, Keyboard::Scan Down);
-	void scoreUpdater(Vector2f position, Text& score, Vector2f size);
+	void scoreUpdater(Text& score, Vector2f position, Vector2f size);
 	void update(float dt);
 	void draw(RenderWindow& window);
 
