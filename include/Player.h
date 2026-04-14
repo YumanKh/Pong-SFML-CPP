@@ -25,5 +25,5 @@ private:
 	Keyboard::Scan downKey;
 	Vector2f playerPos;
 	Vector2f goalPos;
-	int playerScore = 1;
+	int playerScore = 0;
 };

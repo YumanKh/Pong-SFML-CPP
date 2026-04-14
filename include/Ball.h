@@ -15,9 +15,12 @@ public:
 	void draw(RenderWindow& window);
 	void reset(Vector2f position);
 	FloatRect getBounds() const { return ball->getGlobalBounds(); }
+	void setScored() { justScored = true; scoreDelay = 0.5f; }
 
 private:
 	unique_ptr<RectangleShape> ball;
 	Vector2f ballPos;
 	Vector2f velocity;
+	bool justScored = false;
+	float scoreDelay = 0.f;
 };

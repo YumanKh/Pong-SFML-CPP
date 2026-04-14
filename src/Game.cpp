@@ -97,12 +97,17 @@ void Game::update(float dt) {
 		player_2->update(dt);
 		ball->update(dt, *player_1, *player_2);
 		if (ball->getBounds().findIntersection(player_1->getGoalBounds())) {
+			cout << "Player 2 scored!" << endl;
 			player_2->addScore();
+			ball->setScored();
 			ball->reset(Vector2f(495.f, 295.f));
 		}
 		else if (ball->getBounds().findIntersection(player_2->getGoalBounds())) {
+			cout << "Player 2 scored!" << endl;
 			player_1->addScore();
+			ball->setScored();
 			ball->reset(Vector2f(495.f, 295.f));
+			
 		}
 	}
 

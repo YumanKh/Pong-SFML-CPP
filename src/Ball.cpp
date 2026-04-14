@@ -17,6 +17,13 @@ Ball::Ball(Vector2f position) {
 }
 
 void Ball::update(float dt, Player& player1, Player& player2) {
+	//checks if player scored
+	if (justScored) {
+		scoreDelay -= dt;
+		if (scoreDelay <= 0.f) justScored = false;
+		return;
+	}
+
 	ball->move(velocity * dt);
 
 	//player collision
