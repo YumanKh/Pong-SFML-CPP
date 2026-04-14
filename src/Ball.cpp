@@ -50,6 +50,10 @@ void Ball::update(float dt, Player& player1, Player& player2) {
 	if (ball->getPosition().y >= 571.25) velocity.y *= -1;
 }
 
+void Ball::reset(Vector2f position) {
+	ball->setPosition(position);
+}
+
 void Ball::draw(RenderWindow& window) {
 	window.draw(*ball);
 }

@@ -6,13 +6,15 @@
 using namespace std;
 using namespace sf;
 
-#include "Player.h"
+class Player;
 
 class Ball {
 public:
 	Ball(Vector2f position);
 	void update(float dt, Player& player1, Player& player2);
 	void draw(RenderWindow& window);
+	void reset(Vector2f position);
+	FloatRect getBounds() const { return ball->getGlobalBounds(); }
 
 private:
 	unique_ptr<RectangleShape> ball;

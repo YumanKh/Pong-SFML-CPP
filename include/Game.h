@@ -52,6 +52,6 @@ private:
 	//players
 	unique_ptr<Player> player_1;
 	unique_ptr<Player> player_2;
-
+	//ball
 	unique_ptr<Ball> ball;
 };
