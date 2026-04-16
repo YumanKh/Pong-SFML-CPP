@@ -56,6 +56,11 @@ Game::Game()
 	//goals
 	player_1->goalHit(font, Vector2f(890.f, 187.5f), Vector2f(750.f, 20.f), *ball);
 	player_2->goalHit(font, Vector2f(60.f, 187.5f), Vector2f(200.f, 20.f), *ball);
+
+	//sound effects
+	goalBuffer = make_unique<SoundBuffer>();
+	if (!goalBuffer->loadFromFile("assets/goal.ogg")) cout << "Error loading sound." << endl;
+	goalSound = make_unique<Sound>(*goalBuffer);
 }
 
 void Game::run() {
@@ -97,17 +102,14 @@ void Game::update(float dt) {
 		player_2->update(dt);
 		ball->update(dt, *player_1, *player_2);
 		if (ball->getBounds().findIntersection(player_1->getGoalBounds())) {
-			cout << "Player 2 scored!" << endl;
+			goalSound->play();
 			player_2->addScore();
-			ball->setScored();
 			ball->reset(Vector2f(495.f, 295.f));
 		}
 		else if (ball->getBounds().findIntersection(player_2->getGoalBounds())) {
-			cout << "Player 2 scored!" << endl;
+			goalSound->play();
 			player_1->addScore();
-			ball->setScored();
 			ball->reset(Vector2f(495.f, 295.f));
-			
 		}
 	}
 

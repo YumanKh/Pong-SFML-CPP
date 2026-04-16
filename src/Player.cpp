@@ -19,7 +19,7 @@ void Player::goalHit(Font& font, Vector2f position, Vector2f scorePosition, Ball
 
 	goal = make_unique<RectangleShape>();
 	goal->setSize({ 50.f, 250.f });
-	goal->setFillColor(Color::Red);
+	goal->setFillColor(Color::Transparent);
 	goal->setPosition(goalPos);
 }
 

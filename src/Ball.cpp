@@ -14,32 +14,24 @@ Ball::Ball(Vector2f position) {
 	ball->setSize({ 10.f, 10.f });
 	ball->setFillColor(Color::White);
 	ball->setPosition(position);
+
+	hitBuffer = make_unique<SoundBuffer>();
+	if (!hitBuffer->loadFromFile("assets/ball.ogg")) cout << "Error loading sound." << endl;
+	hitSound = make_unique<Sound>(*hitBuffer);
 }
 
 void Ball::update(float dt, Player& player1, Player& player2) {
-	//checks if player scored
-	if (justScored) {
-		scoreDelay -= dt;
-		if (scoreDelay <= 0.f) justScored = false;
-		return;
-	}
-
 	ball->move(velocity * dt);
 
 	//player collision
 	if (ball->getGlobalBounds().findIntersection(player1.getBounds())) {
 		velocity.x *= -1;
-		float ballCenterY = ball->getPosition().y + 5.f;
-		float playerCenterY = player1.getBounds().position.y + 50.f;
-		if (ballCenterY < playerCenterY - 40.f || ballCenterY > playerCenterY + 40.f)
-			velocity.y *= -1;
+		hitSound->play();
+			
 	}
 	if (ball->getGlobalBounds().findIntersection(player2.getBounds())) {
 		velocity.x *= -1;
-		float ballCenterY = ball->getPosition().y + 5.f;
-		float playerCenterY = player2.getBounds().position.y + 50.f;
-		if (ballCenterY < playerCenterY - 40.f || ballCenterY > playerCenterY + 40.f)
-			velocity.y *= -1;
+		hitSound->play();
 	}
 
 	//walls collision (goal walls)

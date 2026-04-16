@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 using namespace std;
 using namespace sf;
 
@@ -54,4 +55,8 @@ private:
 	unique_ptr<Player> player_2;
 	//ball
 	unique_ptr<Ball> ball;
+
+	//sounds
+	unique_ptr<SoundBuffer> goalBuffer;
+	unique_ptr<Sound> goalSound;
 };
