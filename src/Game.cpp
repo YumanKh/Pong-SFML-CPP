@@ -71,6 +71,10 @@ Game::Game()
 	goalBuffer = make_unique<SoundBuffer>();
 	if (!goalBuffer->loadFromFile("assets/goal.ogg")) cout << "Error loading sound." << endl;
 	goalSound = make_unique<Sound>(*goalBuffer);
+
+	buttonBuffer = make_unique<SoundBuffer>();
+	if (!buttonBuffer->loadFromFile("assets/button.ogg")) cout << "Error loading sound." << endl;
+	buttonSound = make_unique<Sound>(*buttonBuffer);
 }
 
 void Game::run() {
@@ -89,9 +93,9 @@ void Game::handleEvents() {
 		if (event->is<Event::Closed>()) isRunning = false;
 		if (gameState == Menu) {
 			if (event->is<Event::MouseButtonPressed>()) {
-				if (play_button->isClicked(Vector2f(Mouse::getPosition(window)))) gameState = Playing;
-				else if (options_button->isClicked(Vector2f(Mouse::getPosition(window)))) gameState = Settings;
-				else if (credits_button->isClicked(Vector2f(Mouse::getPosition(window)))) cout << "Credits Test" << endl;
+				if (play_button->isClicked(Vector2f(Mouse::getPosition(window)))) { gameState = Playing; if (soundOn) buttonSound->play(); }
+				else if (options_button->isClicked(Vector2f(Mouse::getPosition(window)))) { gameState = Settings; if (soundOn) buttonSound->play(); }
+				else if (credits_button->isClicked(Vector2f(Mouse::getPosition(window)))) { cout << "Credits Test" << endl; if (soundOn) buttonSound->play();}
 				else if (quit_button->isClicked(Vector2f(Mouse::getPosition(window)))) isRunning = false;
 			}
 		}
@@ -102,8 +106,8 @@ void Game::handleEvents() {
 		}
 		if (gameState == Settings) {
 			if (event->is<Event::MouseButtonPressed>()) {
-				if (on_button->isClicked(Vector2f(Mouse::getPosition(window)))) soundOn = true;
-				else if (off_button->isClicked(Vector2f(Mouse::getPosition(window)))) soundOn = false;
+				if (on_button->isClicked(Vector2f(Mouse::getPosition(window)))) { soundOn = true; if (soundOn) buttonSound->play();}
+				else if (off_button->isClicked(Vector2f(Mouse::getPosition(window)))) { soundOn = false; if (soundOn) buttonSound->play(); }
 			}
 			if (event->is<Event::KeyPressed>()) {
 				if (Keyboard::isKeyPressed(Keyboard::Scan::Escape)) gameState = Menu;

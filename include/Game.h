@@ -71,5 +71,7 @@ private:
 	bool soundOn = true;
 	unique_ptr<SoundBuffer> goalBuffer;
 	unique_ptr<Sound> goalSound;
+	unique_ptr<SoundBuffer> buttonBuffer;
+	unique_ptr<Sound> buttonSound;
 
 };
