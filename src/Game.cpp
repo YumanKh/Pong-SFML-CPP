@@ -53,7 +53,7 @@ Game::Game()
 	on_button = make_unique<Button>(font, "ON", Vector2f{ 385, 225 }, Vector2f{ 385, 225 }, Vector2f{ 65.0f, 40.0f });
 	off_button = make_unique<Button>(font, "OFF", Vector2f{ 560, 225 }, Vector2f{ 560, 225 }, Vector2f{ 65.0f, 40.0f });
 	fps30_button = make_unique<Button>(font, "30", Vector2f{ 385, 375 }, Vector2f{ 385, 375 }, Vector2f{ 65.0f, 40.0f });
-	fps30_button = make_unique<Button>(font, "60", Vector2f{ 560, 375 }, Vector2f{ 560, 375 }, Vector2f{ 65.0f, 40.0f });
+	fps60_button = make_unique<Button>(font, "60", Vector2f{ 560, 375 }, Vector2f{ 560, 375 }, Vector2f{ 65.0f, 40.0f });
 
 	//text
 	sound_text = make_unique<Button>(font, "VOLUME", Vector2f{ 435, 150 }, Vector2f{ 435, 150 }, Vector2f{ 0.f, 0.f });
