@@ -6,7 +6,7 @@ Game::Game()
 	, gameState(Menu)
 {
 	//framerateLimit
-	window.setFramerateLimit(90);
+	window.setFramerateLimit(60);
 
 	//loading textures
 	//buttons table
@@ -52,9 +52,12 @@ Game::Game()
 	quit_button = make_unique<Button>(font, "QUIT", Vector2f{ 30, 400 }, Vector2f{ 10, 400 }, Vector2f{ 280.0f, 45.0f });
 	on_button = make_unique<Button>(font, "ON", Vector2f{ 385, 225 }, Vector2f{ 385, 225 }, Vector2f{ 65.0f, 40.0f });
 	off_button = make_unique<Button>(font, "OFF", Vector2f{ 560, 225 }, Vector2f{ 560, 225 }, Vector2f{ 65.0f, 40.0f });
+	fps30_button = make_unique<Button>(font, "30", Vector2f{ 385, 375 }, Vector2f{ 385, 375 }, Vector2f{ 65.0f, 40.0f });
+	fps30_button = make_unique<Button>(font, "60", Vector2f{ 560, 375 }, Vector2f{ 560, 375 }, Vector2f{ 65.0f, 40.0f });
 
 	//text
-	sound_text = make_unique<Button>(font, "VOLUME", Vector2f{ 440, 150 }, Vector2f{ 440, 150 }, Vector2f{ 0.f, 0.f});
+	sound_text = make_unique<Button>(font, "VOLUME", Vector2f{ 435, 150 }, Vector2f{ 435, 150 }, Vector2f{ 0.f, 0.f });
+	frame_text = make_unique<Button>(font, "FRAME RATE", Vector2f{ 390, 300 }, Vector2f{ 390, 300 }, Vector2f{ 0.f, 0.f });
 
 	//players
 	player_1 = make_unique<Player>(Vector2f(840.f, 250.f), Keyboard::Scan::Up, Keyboard::Scan::Down);
@@ -107,7 +110,9 @@ void Game::handleEvents() {
 		if (gameState == Settings) {
 			if (event->is<Event::MouseButtonPressed>()) {
 				if (on_button->isClicked(Vector2f(Mouse::getPosition(window)))) { soundOn = true; if (soundOn) buttonSound->play();}
-				else if (off_button->isClicked(Vector2f(Mouse::getPosition(window)))) { soundOn = false; if (soundOn) buttonSound->play(); }
+				else if (off_button->isClicked(Vector2f(Mouse::getPosition(window)))) soundOn = false;
+				if (fps30_button->isClicked(Vector2f(Mouse::getPosition(window)))) { window.setFramerateLimit(30); if (soundOn) buttonSound->play();}
+				else if (fps60_button->isClicked(Vector2f(Mouse::getPosition(window)))) { window.setFramerateLimit(60); if (soundOn) buttonSound->play(); }
 			}
 			if (event->is<Event::KeyPressed>()) {
 				if (Keyboard::isKeyPressed(Keyboard::Scan::Escape)) gameState = Menu;
@@ -127,7 +132,8 @@ void Game::update(float dt) {
 	if (gameState == Settings) {
 		on_button->update(window);
 		off_button->update(window);
-
+		fps30_button->update(window);
+		fps60_button->update(window);
 	}
 	
 	if (gameState == Playing) {
@@ -166,6 +172,9 @@ void Game::draw() {
 		sound_text->draw(window);
 		on_button->draw(window);
 		off_button->draw(window);
+		frame_text->draw(window);
+		fps30_button->draw(window);
+		fps60_button->draw(window);
 	}
 
 	if (gameState == Playing) {
