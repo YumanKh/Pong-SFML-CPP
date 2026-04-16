@@ -20,18 +20,18 @@ Ball::Ball(Vector2f position) {
 	hitSound = make_unique<Sound>(*hitBuffer);
 }
 
-void Ball::update(float dt, Player& player1, Player& player2) {
+void Ball::update(float dt, Player& player1, Player& player2, bool soundOn) {
 	ball->move(velocity * dt);
 
 	//player collision
 	if (ball->getGlobalBounds().findIntersection(player1.getBounds())) {
 		velocity.x *= -1;
-		hitSound->play();
+		if (soundOn) hitSound->play();
 			
 	}
 	if (ball->getGlobalBounds().findIntersection(player2.getBounds())) {
 		velocity.x *= -1;
-		hitSound->play();
+		if (soundOn) hitSound->play();
 	}
 
 	//walls collision (goal walls)

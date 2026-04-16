@@ -15,6 +15,11 @@ Game::Game()
 	menu_sprite->setPosition({ 0, 100 });
 	menu_sprite->setColor(Color(180, 180, 180, 180));
 
+	if (!menu_texture_2.loadFromFile("assets/MenuMiddleSprite.png")) cout << "Error loading menu sprite." << endl;
+	menu_sprite_2 = make_unique<Sprite>(menu_texture_2);
+	menu_sprite_2->setPosition({ 300, 100 });
+	menu_sprite_2->setColor(Color(180, 180, 180, 180));
+
 	//menu wallpaper
 	if (!menu_wallpaper.loadFromFile("assets/MenuWallpaper.jpg")) cout << "Error loading wallpaper." << endl;
 	menuWallpaper_sprite = make_unique<Sprite>(menu_wallpaper);
@@ -45,7 +50,8 @@ Game::Game()
 	options_button = make_unique<Button>(font, "OPTIONS", Vector2f{ 30, 233 }, Vector2f{ 10, 233 }, Vector2f{ 280.0f, 45.0f });
 	credits_button = make_unique<Button>(font, "CREDITS", Vector2f{ 30, 316 }, Vector2f{ 10, 316 }, Vector2f{ 280.0f, 45.0f });
 	quit_button = make_unique<Button>(font, "QUIT", Vector2f{ 30, 400 }, Vector2f{ 10, 400 }, Vector2f{ 280.0f, 45.0f });
-
+	on_button = make_unique<Button>(font, "ON", Vector2f{ 385, 225 }, Vector2f{ 385, 225 }, Vector2f{ 65.0f, 40.0f });
+	off_button = make_unique<Button>(font, "OFF", Vector2f{ 560, 225 }, Vector2f{ 560, 225 }, Vector2f{ 65.0f, 40.0f });
 	//players
 	player_1 = make_unique<Player>(Vector2f(840.f, 250.f), Keyboard::Scan::Up, Keyboard::Scan::Down);
 	player_2 = make_unique<Player>(Vector2f(150.f, 250.f), Keyboard::Scan::W, Keyboard::Scan::S);
@@ -80,10 +86,23 @@ void Game::handleEvents() {
 		if (gameState == Menu) {
 			if (event->is<Event::MouseButtonPressed>()) {
 				if (play_button->isClicked(Vector2f(Mouse::getPosition(window)))) gameState = Playing;
-				else if (options_button->isClicked(Vector2f(Mouse::getPosition(window)))) cout << "Options Test" << endl;
+				else if (options_button->isClicked(Vector2f(Mouse::getPosition(window)))) gameState = Settings;
 				else if (credits_button->isClicked(Vector2f(Mouse::getPosition(window)))) cout << "Credits Test" << endl;
 				else if (quit_button->isClicked(Vector2f(Mouse::getPosition(window)))) isRunning = false;
-				
+			}
+		}
+		if (gameState == Playing) {
+			if (event->is<Event::KeyPressed>()) {
+				if (Keyboard::isKeyPressed(Keyboard::Scan::Escape)) gameState = Menu;
+			}
+		}
+		if (gameState == Settings) {
+			if (event->is<Event::MouseButtonPressed>()) {
+				if (on_button->isClicked(Vector2f(Mouse::getPosition(window)))) soundOn = true;
+				else if (off_button->isClicked(Vector2f(Mouse::getPosition(window)))) soundOn = false;
+			}
+			if (event->is<Event::KeyPressed>()) {
+				if (Keyboard::isKeyPressed(Keyboard::Scan::Escape)) gameState = Menu;
 			}
 		}
 	}
@@ -96,18 +115,24 @@ void Game::update(float dt) {
 		credits_button->update(window);
 		quit_button->update(window);
 	}
+
+	if (gameState == Settings) {
+		on_button->update(window);
+		off_button->update(window);
+
+	}
 	
 	if (gameState == Playing) {
 		player_1->update(dt);
 		player_2->update(dt);
-		ball->update(dt, *player_1, *player_2);
+		ball->update(dt, *player_1, *player_2, soundOn);
 		if (ball->getBounds().findIntersection(player_1->getGoalBounds())) {
-			goalSound->play();
+			if (soundOn) goalSound->play();
 			player_2->addScore();
 			ball->reset(Vector2f(495.f, 295.f));
 		}
 		else if (ball->getBounds().findIntersection(player_2->getGoalBounds())) {
-			goalSound->play();
+			if (soundOn) goalSound->play();
 			player_1->addScore();
 			ball->reset(Vector2f(495.f, 295.f));
 		}
@@ -126,6 +151,14 @@ void Game::draw() {
 		quit_button->draw(window);
 	}
 
+	if (gameState == Settings) {
+		window.clear(Color::Black);
+		window.draw(*menuWallpaper_sprite);
+		window.draw(*menu_sprite_2);
+		on_button->draw(window);
+		off_button->draw(window);
+	}
+
 	if (gameState == Playing) {
 		window.clear(Color::Black);
 		window.draw(*line_sprite);
@@ -133,8 +166,7 @@ void Game::draw() {
 		player_1->draw(window);
 		player_2->draw(window);
 		ball->draw(window);
-		
-		
+
 	}
 
 	window.display();
