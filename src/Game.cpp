@@ -58,6 +58,8 @@ Game::Game()
 	//text
 	sound_text = make_unique<Button>(font, "VOLUME", Vector2f{ 435, 150 }, Vector2f{ 435, 150 }, Vector2f{ 0.f, 0.f });
 	frame_text = make_unique<Button>(font, "FRAME RATE", Vector2f{ 390, 300 }, Vector2f{ 390, 300 }, Vector2f{ 0.f, 0.f });
+	creator = make_unique<Button>(font, "CREATED BY", Vector2f{ 395, 150 }, Vector2f{ 395, 150 }, Vector2f{ 0.f, 0.f });
+	yuman = make_unique<Button>(font, "YUMAN", Vector2f{ 450, 225 }, Vector2f{ 450, 225 }, Vector2f{ 0.f, 0.f });
 
 	//players
 	player_1 = make_unique<Player>(Vector2f(840.f, 250.f), Keyboard::Scan::Up, Keyboard::Scan::Down);
@@ -98,14 +100,13 @@ void Game::handleEvents() {
 			if (event->is<Event::MouseButtonPressed>()) {
 				if (play_button->isClicked(Vector2f(Mouse::getPosition(window)))) { gameState = Playing; if (soundOn) buttonSound->play(); }
 				else if (options_button->isClicked(Vector2f(Mouse::getPosition(window)))) { gameState = Settings; if (soundOn) buttonSound->play(); }
-				else if (credits_button->isClicked(Vector2f(Mouse::getPosition(window)))) { cout << "Credits Test" << endl; if (soundOn) buttonSound->play();}
+				else if (credits_button->isClicked(Vector2f(Mouse::getPosition(window)))) { gameState = Credits; if (soundOn) buttonSound->play();}
 				else if (quit_button->isClicked(Vector2f(Mouse::getPosition(window)))) isRunning = false;
 			}
 		}
 		if (gameState == Playing) {
-			if (event->is<Event::KeyPressed>()) {
-				if (Keyboard::isKeyPressed(Keyboard::Scan::Escape)) gameState = Menu;
-			}
+			if (event->is<Event::KeyPressed>()) if (Keyboard::isKeyPressed(Keyboard::Scan::Escape)) gameState = Menu;
+
 		}
 		if (gameState == Settings) {
 			if (event->is<Event::MouseButtonPressed>()) {
@@ -114,9 +115,11 @@ void Game::handleEvents() {
 				if (fps30_button->isClicked(Vector2f(Mouse::getPosition(window)))) { window.setFramerateLimit(30); if (soundOn) buttonSound->play();}
 				else if (fps60_button->isClicked(Vector2f(Mouse::getPosition(window)))) { window.setFramerateLimit(60); if (soundOn) buttonSound->play(); }
 			}
-			if (event->is<Event::KeyPressed>()) {
-				if (Keyboard::isKeyPressed(Keyboard::Scan::Escape)) gameState = Menu;
-			}
+			if (event->is<Event::KeyPressed>()) if (Keyboard::isKeyPressed(Keyboard::Scan::Escape)) gameState = Menu;
+
+		}
+		if (gameState == Credits) {
+			if (event->is<Event::KeyPressed>()) if (Keyboard::isKeyPressed(Keyboard::Scan::Escape)) gameState = Menu;
 		}
 	}
 }
@@ -175,6 +178,14 @@ void Game::draw() {
 		frame_text->draw(window);
 		fps30_button->draw(window);
 		fps60_button->draw(window);
+	}
+
+	if (gameState == Credits) {
+		window.clear(Color::Black);
+		window.draw(*menuWallpaper_sprite);
+		window.draw(*menu_sprite_2);
+		creator->draw(window);
+		yuman->draw(window);
 	}
 
 	if (gameState == Playing) {

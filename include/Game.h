@@ -12,6 +12,7 @@ using namespace sf;
 enum GameState {
 	Menu,
 	Settings,
+	Credits,
 	Playing,
 };
 
@@ -47,6 +48,10 @@ private:
 	//settings text
 	unique_ptr<Button> sound_text;
 	unique_ptr<Button> frame_text;
+
+	//credits text
+	unique_ptr<Button> creator;
+	unique_ptr<Button> yuman;
 
 	//menu textures
 	Texture menu_texture;
