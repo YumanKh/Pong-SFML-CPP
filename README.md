@@ -1,10 +1,9 @@
 <<<<<<< HEAD
 # YuKman's Pong 🎮
 
-A classic Pong game built from scratch using C++ and SFML 3, featuring a menu system, basic game settings, credits, and two-player local gameplay.
+A redesigned classic Pong game built from scratch in C++ with SFML 3, featuring object-oriented architecture, a complete menu system, local two-player gameplay, and custom-made assets.
 
-This project is my first SFML game.  
-At college, I am currently studying the fundamentals of C++, and this project represents my first step into graphics, game loops, and interactive programming.
+This project is the refactored version of my first SFML game. The original codebase was written procedurally across multiple files with no real architectural structure — no classes, no separation of concerns, and no memory management strategy. This version was rebuilt using OOP principles, smart pointers, encapsulation, and separation of responsibilities — reflecting the C++ fundamentals I am currently studying.
 
 
 ---
@@ -27,10 +26,11 @@ At college, I am currently studying the fundamentals of C++, and this project re
 
 ## 🎮 Gameplay
 
-- Two-player local multiplayer — play against a friend on the same keyboard
-- Ball physics — random angle and direction on each serve
-- Score tracking — first to score wins
-- Pause menu — accessible during gameplay via Escape
+- Two-player local multiplayer on the same keyboard
+- Feat: Reworked randomized ball direction and angle on each serve
+- Persistent score tracking across rounds
+- Pause state — press Escape during gameplay to return to menu; game state, scores, and positions are preserved on return
+- Feat: Custom-built terrain with new goal zones and boundary collision
 
 ---
 
@@ -48,8 +48,8 @@ At college, I am currently studying the fundamentals of C++, and this project re
 
 - Main Menu with Play, Settings, Credits, and Quit
 - Settings Menu — toggle Volume On/Off and set FPS (30 or 60)
-- Credits Screen — game design, development, and asset credits
-- Quit Confirmation — confirm or deny before exiting
+- Credits Screen
+- Feat: This Refactored Version Has Sound Effects
 - Hover Effects on all buttons
 - Delta Time movement — consistent speed across all hardware
 
@@ -65,19 +65,29 @@ At college, I am currently studying the fundamentals of C++, and this project re
 
 ## 📁 Project Structure
 
-```
-YuKman's Pong/
-├── main.cpp              # Entry point, game loop, window management
-├── menu.cpp              # Main menu rendering and mouse interaction
-├── player.cpp            # Player creation and controls
-├── ball.cpp              # Ball creation and movement physics
-├── settings.cpp          # Settings menu rendering and interaction
-├── credits.cpp           # Credits screen rendering
-├── closing.cpp           # Quit confirmation and closing logic
-├── score_updater.cpp     # Score hitboxes and score display
-├── prototypes.h          # All structs, enums, and function prototypes
+Pong-SFML-CPP/
+├── src/
+│   ├── main.cpp
+│   ├── Game.cpp
+│   ├── Player.cpp
+│   ├── Ball.cpp
+│   └── Button.cpp
+├── include/
+│   ├── Game.h
+│   ├── Player.h
+│   ├── Ball.h
+│   └── Button.h
+├── assets/
+│   ├── BlackGameFont.ttf
+│   ├── MenuWallpaper2.jpg     # AI-generated (Nano Banana)
+│   ├── MenuSprite.png         # Hand-made
+│   ├── TerrainSprite.png      # Hand-made
+│   ├── TerrainLine.png        # Hand-made
+│   ├── ball.ogg
+│   ├── goal.ogg
+│   └── button.ogg
+├── screenshots/
 └── README.md
-```
 
 ---
 
@@ -91,7 +101,7 @@ YuKman's Pong/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/YumanKh/
+git clone https://github.com/YumanKh/Pong-SFML-CPP
 ```
 
 2. Download [SFML 3.0.2](https://www.sfml-dev.org/download.php) for Visual C++ 64-bit
@@ -119,24 +129,23 @@ git clone https://github.com/YumanKh/
 ---
 
 ## 👤 Author
-
-**Yuman Khoufache**  
-First-year Computer Science student at Austin Community College  
+Yuman Khoufache
+First-year Computer Science student at Austin Community College. 
+Beyond coursework, I actively pursue self-directed learning to develop cleaner architecture and stronger programming fundamentals. This project reflects my efforts.
 
 ---
 
 ## 🙏 Special Thanks
 
-- **Claude (Anthropic)** — Used for pair programming, technical debugging assistance.
+- **Claude (Anthropic)** — Used for technical debugging assistance.
 - **SFML Team** — for the library
 - **Gemini / Nano Banana 2** — asset creation (menu wallpaper)
 
 ---
 
 ## 📜 License
+© 2026 Yuman Khoufache — Released with no copyright restrictions. Free to use, modify, and distribute.
 
-© 2026 Yuman — This project is released with no copyright.  
-You are free to use, modify, and share it without restriction.
-=======
+
 # Pong-SFML-CPP
 >>>>>>> 6def752e0dbee19eb130b7e92ba310c3a7f6fe58
