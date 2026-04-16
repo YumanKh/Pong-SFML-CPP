@@ -52,6 +52,10 @@ Game::Game()
 	quit_button = make_unique<Button>(font, "QUIT", Vector2f{ 30, 400 }, Vector2f{ 10, 400 }, Vector2f{ 280.0f, 45.0f });
 	on_button = make_unique<Button>(font, "ON", Vector2f{ 385, 225 }, Vector2f{ 385, 225 }, Vector2f{ 65.0f, 40.0f });
 	off_button = make_unique<Button>(font, "OFF", Vector2f{ 560, 225 }, Vector2f{ 560, 225 }, Vector2f{ 65.0f, 40.0f });
+
+	//text
+	sound_text = make_unique<Button>(font, "VOLUME", Vector2f{ 440, 150 }, Vector2f{ 440, 150 }, Vector2f{ 0.f, 0.f});
+
 	//players
 	player_1 = make_unique<Player>(Vector2f(840.f, 250.f), Keyboard::Scan::Up, Keyboard::Scan::Down);
 	player_2 = make_unique<Player>(Vector2f(150.f, 250.f), Keyboard::Scan::W, Keyboard::Scan::S);
@@ -155,6 +159,7 @@ void Game::draw() {
 		window.clear(Color::Black);
 		window.draw(*menuWallpaper_sprite);
 		window.draw(*menu_sprite_2);
+		sound_text->draw(window);
 		on_button->draw(window);
 		off_button->draw(window);
 	}
